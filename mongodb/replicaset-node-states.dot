@@ -1,0 +1,43 @@
+digraph replicaset_nodes_state_machine {
+	headlabel = "This is test head label"
+	rankdir = TB;
+	size = "5,8"
+
+	// Initiation states
+	node [shape = doublecircle style = filled fillcolor = "green" fontcolor = "blue" rank = "min"];
+	STARTUP 
+
+	// Error states
+	node [shape = doublecircle style = filled fillcolor = "red" fontcolor = "black" rank = "max"];
+	DOWN 
+	SHUNNED
+	UNKNOWN
+
+	// Nodes of intermediate transformational state
+	node [shape = circle style = filled fillcolor = "violet" fontcolor = "blue"];
+	STARTUP2
+	RECOVERING
+	ROLLBACK
+
+	// Valid core states of the health replic-set nodes
+	node [shape = circle style = filled fillcolor = "green" fontcolor = "blue"];
+	PRIMARY
+	SECONDARY
+	ARBITER
+
+	STARTUP -> STARTUP2 [ label = "" ]
+	STARTUP -> UNKNOWN
+	STARTUP2 -> RECOVERING [ label = "" ]
+	STARTUP2 -> ARBITER [ label = "" ]
+	STARTUP2 -> ROLLBACK
+	ROLLBACK -> RECOVERING
+	RECOVERING -> PRIMARY [ label = "" ]
+	RECOVERING -> SECONDARY [ label = "" ]
+	STARTUP2 -> DOWN
+	ROLLBACK -> SHUNNED
+	SECONDARY -> SHUNNED
+	ARBITER -> SHUNNED
+	SHUNNED -> STARTUP2
+	PRIMARY -> SECONDARY
+	SECONDARY -> PRIMARY
+}
