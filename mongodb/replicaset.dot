@@ -1,0 +1,30 @@
+digraph ReplicaSet {
+	label = "3-node ReplicaSet (2 replica + 1 arbiter)"
+	bgcolor = transparent
+
+	node [shape = "rectangle" style = filled fillcolor = "green3"]
+	subgraph cluster_dc1 {
+		label = "DC1"
+		color = blue
+
+		Primary
+	}
+
+	subgraph cluster_dc2 {
+		label = "DC2"
+		color = blue
+
+		Secondary
+	}
+
+	subgraph cluster_dc3 {
+		label = "DC3"
+		color = blue
+
+		Arbiter
+	}
+
+	Primary -> Secondary [dir = both label = "data replication / replica-admin"]
+	Primary -> Arbiter [dir = both label = "replica-admin"]
+	Secondary -> Arbiter [dir = both label = "replica-admin"]
+}
