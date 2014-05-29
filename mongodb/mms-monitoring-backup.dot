@@ -1,0 +1,25 @@
+digraph MMSMonitoring {
+	label = "MMS Monitoring and Backup"
+	bgcolor = transparent
+
+	node [shape = "rectangle" style = filled fillcolor = "green3"]
+	subgraph cluster_head_node {
+		label = "HEAD"
+		color = blue
+	}
+
+	subgraph cluster_block_store {
+		label = "Block Store"
+		color = blue
+	}
+
+	subgraph cluster_ingestion {
+		label = "Ingestion"
+		color = blue
+	}
+
+	subgraph cluster_daemon {
+		label = "Backup Daemon"
+		color = blue
+	}
+}
